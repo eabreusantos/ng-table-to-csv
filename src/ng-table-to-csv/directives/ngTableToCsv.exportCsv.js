@@ -10,6 +10,7 @@
           link     : function (scope, element, attrs) {
             var data = '';
             var separator = attrs.separator ? attrs.separator : ',';
+            var addBom = attrs.addBom ? attrs.addBom : false;
             var ignoreSelector = attrs.exportCsvIgnore || '.ng-table-filters';
             var csv = {
               stringify : function (str) {
@@ -20,6 +21,9 @@
               },
               generate  : function () {
                 data = '';
+                if (addBom) {
+                  data += "\ufeff";
+                }
                 var rows = element.find('tr');
                 angular.forEach(rows, function (row, i) {
                   var tr = angular.element(row),
